@@ -1,0 +1,7 @@
+[autorun]
+open=autorun.bat
+icon=autorun.ico
+PS3 Mod Pack DVD
+
+shell\MainMenu\command=autorun.bat
+shell\MainMenu=&Load Main Menu
