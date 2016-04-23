@@ -1,7 +1,7 @@
 @echo off
 
 
-mode con lines=33
+mode con lines=34
 
 
 
@@ -102,9 +102,12 @@ echo.
 echo 4) Prepare and Install 3.55 OFW PUP
 echo.
 echo.
-echo 5) Choose A Downgrade Firmware To Install
+echo 5) Choose a Downgrade Firmware To Install
 echo.
-echo 6) Check Minimum Version of Target PS3 Console
+echo 6) Downgrade a 3.56 Minimum Version Console
+echo.
+echo.
+echo 7) Check Minimum Version of Target PS3 Console
 echo.
 echo.
 echo.
@@ -114,11 +117,12 @@ echo X) Exit
 echo.
 echo.
 
-choice /c 123456bx /n
+choice /c 1234567bx /n
 
-if errorlevel 8 goto end
-if errorlevel 7 goto mainps3
-if errorlevel 6 goto dgMinCheck
+if errorlevel 9 goto end
+if errorlevel 8 goto mainps3
+if errorlevel 7 goto dgMinCheck
+if errorlevel 6 goto dg356Main
 if errorlevel 5 goto dgCFW1
 if errorlevel 4 goto dgStep4
 if errorlevel 3 goto dgStep3
@@ -187,14 +191,101 @@ set restore=ren %updatePUPRestore% 3.55-ofw-cex.PUP
 goto dgProcess
 
 
+:dg356Main
+
+cls
+echo -------------------------------------------------------------------------------
+echo PS3 Modding Script :: Downgrade Console :: 3.56 Minimum Version
+echo -------------------------------------------------------------------------------
+echo.
+echo.
+echo.
+echo Please select an option below:
+echo.
+echo.
+echo 1) Prepare and Install 4.40 Bobby Downgrade PUP
+echo.
+echo 2) Prepare and Install ToggleQA Package
+echo.
+echo 3) Prepare and Install 4.40 Bobby v1 CEX PUP
+echo.
+echo.
+echo.
+echo B) Back
+echo.
+echo X) Exit
+echo.
+echo.
+
+choice /c 123bx /n
+
+if errorlevel 5 goto end
+if errorlevel 4 goto dgMain
+if errorlevel 3 goto dg356Step3
+if errorlevel 2 goto dg356Step2
+if errorlevel 1 goto dg356Step1
+
+goto dg356Main
+
+
+:dg356Step1
+set dgStatus=9.99 Downgrader To 4.40 CEX
+set install=ren "%fwPath%\9.99-downgrader-to-4.40-bobby.PUP" %updatePUPUse%
+set restore=ren %updatePUPRestore% 9.99-downgrader-to-4.40-bobby.PUP
+goto dg356Process
+
+
+:dg356Step2
+cls
+echo -------------------------------------------------------------------------------
+echo PS3 Modding Script :: Downgrade 3.56 Console :: Toggle QA
+echo -------------------------------------------------------------------------------
+echo.
+echo.
+echo.
+echo Please Insert The USB Flash Drive Into The Far Right Port On PS3 Console
+echo.
+echo.
+echo.
+echo Install The "toggleQA_356DG.pkg" File On The Console [Packages]
+echo.
+echo The PS3 Will Reboot and Beep 3 Times If Successful
+echo.
+echo If It Does Not Reboot and Beep 3 Times, Try Again Until It Does
+echo.
+echo.
+echo After Reboot, Navigate To Settings Column and Highlight Network Settings
+echo.
+echo Push The Following Buttons At The Same Time: L1+L2+R1+R2+L3+DPAD_DOWN
+echo.
+echo There Will Be 3 New Options, If This Does Not Happen, Relaunch "Toggle QA"
+echo.
+echo.
+echo.
+echo.
+echo *WHEN FINISHED, PLUG USB DRIVE BACK INTO COMPUTER*
+echo.
+echo.
+echo Press ENTER When You Are Ready To Proceed To The Next Step....
+echo.
+echo.
+pause>nul
+goto dg356Main
+
+
+:dg356Step3
+set dgStatus=4.40 Bobby v1 CEX
+set install=ren "%fwPath%\4.40-bobby-v1-cex.PUP" %updatePUPUse%
+set restore=ren %updatePUPRestore% 4.40-bobby-v1-cex.PUP
+goto dg356Process
+
+
+
 :pkgInstall
-
-
 goto pkgInstall
 
 
 :dgProcess
-
 %install%
 
 cls
@@ -219,6 +310,33 @@ pause>nul
 %restore%
 
 goto dgMain
+
+
+:dg356Process
+%install%
+
+cls
+echo -------------------------------------------------------------------------------
+echo PS3 Modding Script :: Downgrade 3.56 Console :: %dgStatus%
+echo -------------------------------------------------------------------------------
+echo.
+echo.
+echo.
+echo Please Insert The USB Flash Drive Into The Far Right Port On PS3 Console
+echo.
+echo.
+echo.
+echo.
+echo *WHEN FINISHED, PLUG USB DRIVE BACK INTO COMPUTER*
+echo.
+echo.
+echo Press ENTER When You Are Ready To Proceed To The Next Step....
+echo.
+pause>nul
+
+%restore%
+
+goto dg356Main
 
 
 :dgCFW1
