@@ -249,9 +249,9 @@ echo.
 echo.
 echo Install The "toggleQA_356DG.pkg" File On The Console [Packages]
 echo.
-echo The PS3 Will Reboot and Beep 3 Times If Successful
 echo.
-echo If It Does Not Reboot and Beep 3 Times, Try Again Until It Does
+echo.
+echo.
 echo.
 echo.
 echo After Reboot, Navigate To Settings Column and Highlight Network Settings
